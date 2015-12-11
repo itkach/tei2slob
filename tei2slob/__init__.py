@@ -15,6 +15,7 @@ import collections
 import functools
 import logging
 import os
+import re
 import sys
 import urllib
 
@@ -58,6 +59,10 @@ def attr(parent, path, attr_name):
     return element.attrib.get(attr_name, '') if element is not None else ''
 
 
+def normalize_ws(s):
+    return re.sub(r'\s+', ' ', s)
+
+
 class TEI:
 
     TITLE = './t:fileDesc/t:titleStmt/t:title'
@@ -92,9 +97,9 @@ class TEI:
 
         yield Tag('uri', uri)
 
-        yield Tag('license.name', t(TEI.LICENSE_REF))
+        yield Tag('license.name', normalize_ws(t(TEI.LICENSE_REF)))
         yield Tag('license.url', a(TEI.LICENSE_REF, 'target'))
-        yield Tag('copyright', t(TEI.COPYRIGHT))
+        yield Tag('copyright', normalize_ws(t(TEI.COPYRIGHT)))
 
 
     def _parse_entry(self, element):
