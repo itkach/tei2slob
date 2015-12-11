@@ -26,26 +26,25 @@ import slob
 
 ARTICLE_CONTENT_TYPE = 'text/html;charset=utf-8'
 
-ARTICLE_TEMPLATE = (
-    '<script src="~/js/styleswitcher.js"></script>'
-    '<link rel="stylesheet" href="~/css/default.css" type="text/css">'
-    '<link rel="alternate stylesheet" href="~/css/night.css" type="text/css" title="Night">'
-    '%s'
-)
-
 Tag = collections.namedtuple('Tag', 'name value')
 Content = collections.namedtuple('Content', 'text keys type')
 
+
 NS = 'http://www.tei-c.org/ns/1.0'
+
 NS_MAP = {'': NS, 't': NS}
+
 
 def ns(name):
     return '{%s}%s' % (NS, name)
 
+
 def strip_ns(name):
     return name.split('}')[1]
 
+
 TAG_HEADER = ns('teiHeader')
+
 TAG_ENTRY = ns('entry')
 
 
