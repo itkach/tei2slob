@@ -1,0 +1,26 @@
+body {
+    background-color: black;
+    color: #a0a0a0;
+}
+
+a {
+    color: #A3964E;
+}
+
+a:visited {
+    color: #735A0A;
+}
+
+.pron {
+    color: orangered;
+}
+
+.gen {
+    color: green;
+    font-weight: bold;
+}
+
+.pos {
+    color: green;
+    font-weight: bold;
+}

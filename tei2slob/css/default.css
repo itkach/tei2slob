@@ -1,0 +1,111 @@
+body {
+    background-color: white;
+    font-family: sans-serif;
+    color: black;
+    padding: 0;
+    margin: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: #002bb8;
+    background: none;
+}
+
+a:visited {
+    color: #5a3696;
+}
+
+a:active {
+    color: #faa700;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ol.sense {
+    list-style-type: upper-roman;
+}
+
+.single {
+    padding: 0;
+    display: inline;
+}
+
+.form {
+    margin-bottom: 0.5rem;
+}
+
+.orth {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.pron {
+    font-weight: bold;
+    color: maroon;
+}
+
+.pron:before {
+    content: "[";
+}
+
+.pron:after {
+    content: "]";
+}
+
+.single>li {
+    display: block;
+}
+
+.gen {
+    font-style: italic;
+    color: darkgreen;
+}
+
+.usg.geo {
+    padding-bottom: 0.5rem;
+}
+
+.gramGrp, .gen, .pos, .num {
+    display: inline;
+}
+
+.gen:before {
+    content: "(";
+}
+
+.gen:after {
+    content: ")";
+}
+
+.pos {
+    color: darkgreen;
+    font-weight: bold;
+    padding-right: 0.5rem;
+}
+
+.num {
+    font-style: italic;
+    padding-right: 0.5rem;
+}
+
+.hint {
+    font-size: 90%;
+    font-style: italic;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.hint:before {
+    content: "(";
+}
+
+.hint:after {
+    content: ")";
+}
+
+li.sense {
+    padding-bottom: 0.5rem;
+}
