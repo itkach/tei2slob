@@ -25,7 +25,7 @@
    Then run converter:
 
    #+BEGIN_SRC sh
-   tei2slob
+   tei2slob eng-deu/eng-deu.tei
    #+END_SRC
 
    ~eng-deu-0.3.6.slob~ will be created in the same directory.
