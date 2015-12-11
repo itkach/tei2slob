@@ -10,7 +10,7 @@
    In this virtual environment run
 
    #+BEGIN_SRC sh
-   pip install git+https://github.com/itkach/xdxf2slob.git
+   pip install git+https://github.com/itkach/tei2slob.git
    #+END_SRC
 
 ** Usage
