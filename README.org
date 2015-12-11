@@ -31,7 +31,7 @@
    ~eng-deu-0.3.6.slob~ will be created in the same directory.
 
    Converter attempts to populate dictionary tags based on information
-   in `.tei` header section, but it may fail because the way some elements
+   in ~.tei~ header section, but it may fail because the way some elements
    (like license name) is not standardized and varies across
    dictionaries, so be sure to check the tags:
 
