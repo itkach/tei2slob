@@ -48,14 +48,51 @@ def strip_ns(name):
 TAG_HEADER = ns('teiHeader')
 TAG_ENTRY = ns('entry')
 
+
+def text(parent, path):
+    element = parent.find(path, NS_MAP)
+    return element.text if element is not None else ''
+
+
+def attr(parent, path, attr_name):
+    element = parent.find(path, NS_MAP)
+    return element.attrib.get(attr_name, '') if element is not None else ''
+
+
 class TEI:
+
+    TITLE = './t:fileDesc/t:titleStmt/t:title'
+    EDITION = './t:fileDesc/t:editionStmt/t:edition'
+    PUB_PLACE_REF = './t:fileDesc/t:publicationStmt/t:pubPlace/t:ref'
+    LICENSE_REF = './t:fileDesc/t:publicationStmt/t:availability/t:p/t:ref'
+    COPYRIGHT = './t:fileDesc/t:publicationStmt/t:availability/t:p'
 
     def __init__(self, input_file):
         self.input_file = input_file
 
     def _parse_header(self, element):
-        title = element.find('./t:fileDesc/t:titleStmt/t:title', NS_MAP).text
-        yield Tag('label', title)
+
+        t = lambda path: text(element, path)
+        a = lambda path, attr_name: attr(element, path, attr_name)
+
+        yield Tag('label', t(TEI.TITLE))
+        yield Tag('edition', t(TEI.EDITION))
+
+        source = a(TEI.PUB_PLACE_REF, 'target')
+        yield Tag('source', source)
+
+        noext = basename_notext(self.input_file)
+        uri = noext
+
+        if source:
+            uri = source.rstrip('/') + '/' + noext
+
+        yield Tag('uri', uri)
+
+        yield Tag('license.name', t(TEI.LICENSE_REF))
+        yield Tag('license.url', a(TEI.LICENSE_REF, 'target'))
+        yield Tag('copyright', t(TEI.COPYRIGHT))
+
 
     def _parse_entry(self, element):
         orths = element.findall('./t:form/t:orth', NS_MAP)
@@ -159,6 +196,15 @@ def parse_args():
     return arg_parser.parse_args()
 
 
+def basename_notext(path):
+    basename = os.path.basename(path)
+    noext = basename
+    while True:
+        noext, _ext = os.path.splitext(noext)
+        if not _ext:
+            return noext
+
+
 def main():
 
     logging.basicConfig()
@@ -169,15 +215,8 @@ def main():
 
     outname = args.output_file
 
-    basename = os.path.basename(args.input_file)
-
-    noext = basename
-
     if outname is None:
-        while True:
-            noext, _ext = os.path.splitext(noext)
-            if not _ext:
-                break
+        noext = basename_notext(args.input_file)
         outname = os.path.extsep.join((noext, 'slob'))
 
     def p(s):
@@ -195,7 +234,7 @@ def main():
         slb.tag('label', '')
         slb.tag('license.name', '')
         slb.tag('license.url', '')
-        slb.tag('source', basename)
+        slb.tag('source', os.path.basename(args.input_file))
         slb.tag('uri', '')
         slb.tag('copyright', '')
         slb.tag('created.by', args.created_by)
@@ -214,5 +253,14 @@ def main():
                 slb.tag(item.name, item.value)
             else:
                 slb.add(item.text, *item.keys, content_type=item.type)
+
+    edition = None
+    with slob.open(outname) as s:
+        edition = s.tags.get('edition')
+
+    if edition:
+        noext, ext = os.path.splitext(outname)
+        newname = '{noext}-{edition}{ext}'.format(noext=noext, edition=edition, ext=ext)
+        os.rename(outname, newname)
 
     print('\nAll done in %s\n' % observer.end('all'))
