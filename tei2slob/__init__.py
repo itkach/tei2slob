@@ -62,8 +62,9 @@ class TEI:
 
     TITLE = './t:fileDesc/t:titleStmt/t:title'
     EDITION = './t:fileDesc/t:editionStmt/t:edition'
-    PUB_PLACE_REF = './t:fileDesc/t:publicationStmt/t:pubPlace/t:ref'
-    LICENSE_REF = './t:fileDesc/t:publicationStmt/t:availability/t:p/t:ref'
+    PUB_PLACE_REF = './t:fileDesc/t:publicationStmt/t:pubPlace/*[@target]'
+    ORIGIN_REF = './t:fileDesc/t:sourceDesc//*[@target]'
+    LICENSE_REF = './t:fileDesc/t:publicationStmt/t:availability/t:p/*[@target]'
     COPYRIGHT = './t:fileDesc/t:publicationStmt/t:availability/t:p'
 
     def __init__(self, input_file):
@@ -79,6 +80,9 @@ class TEI:
 
         source = a(TEI.PUB_PLACE_REF, 'target')
         yield Tag('source', source)
+
+        origin = a(TEI.ORIGIN_REF, 'target')
+        yield Tag('origin', origin)
 
         noext = basename_notext(self.input_file)
         uri = noext
