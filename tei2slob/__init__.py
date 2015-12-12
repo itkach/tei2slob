@@ -103,7 +103,7 @@ class TEI:
 
 
     def _parse_entry(self, element):
-        orths = element.findall('./t:form/t:orth', NS_MAP)
+        orths = element.findall('./t:form//t:orth', NS_MAP)
         titles = [orth.text for orth in orths if orth.text]
         root = self.mk_entry_root()
         body = etree.SubElement(root, 'body')
