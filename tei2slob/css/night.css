@@ -24,3 +24,7 @@ a:visited {
     color: green;
     font-weight: bold;
 }
+
+.num, .number {
+    color: skyblue;
+}

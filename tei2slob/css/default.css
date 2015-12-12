@@ -30,21 +30,40 @@ ol.sense {
 
 .single {
     padding: 0;
-    display: inline;
+    display: inline-block;
+    padding-right: 0.5rem;
 }
 
 .form {
     margin-bottom: 0.5rem;
 }
 
-.orth {
+.form:first-child .orth, .orth {
     font-size: x-large;
     font-weight: bold;
+    display: inline-block;
+    padding-right: 0.5rem;
+}
+
+.form.infl {
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.form.infl .orth, .form.infl .case {
+    font-size: 90%;
+}
+
+.sing .orth, .plur .orth {
+    font-size: medium;
+    font-weight: normal;
+    font-style: oblique;
 }
 
 .pron {
     font-weight: bold;
     color: maroon;
+    padding-bottom: 0.25rem;
 }
 
 .pron:before {
@@ -64,31 +83,36 @@ ol.sense {
     color: darkgreen;
 }
 
-.usg.geo {
+.usg {
     padding-bottom: 0.5rem;
 }
 
-.gramGrp, .gen, .pos, .num {
-    display: inline;
+.gramGrp, .gen, .pos, .num, .number, .mood, .tns, .case {
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 0.5rem;
+    font-style: italic;
 }
 
 .gen:before {
     content: "(";
+    vertical-align: top;
+    font-style: italic;
 }
 
 .gen:after {
     content: ")";
+    vertical-align: top;
 }
 
 .pos {
     color: darkgreen;
     font-weight: bold;
-    padding-right: 0.5rem;
 }
 
-.num {
+.num, .number {
     font-style: italic;
-    padding-right: 0.5rem;
+    color: blue;
 }
 
 .hint {
