@@ -47,6 +47,11 @@
    slob tag -n created.by -v me@example.com eng-deu-0.3.6.slob
    #+END_SRC
 
+   ~uri~ is an important tag. When different dictionaries have the
+   same ~uri~ it means they contain keys belonging to the same
+   logical dictionary. So when compiling a new version of existing
+   dictionary make sure uri remains the same.
+
    #+BEGIN_SRC sh
 
 usage: tei2slob [-h] [-o OUTPUT_FILE] [-c {lzma2,zlib}] [-b BIN_SIZE]
