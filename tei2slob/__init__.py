@@ -157,16 +157,23 @@ class TEI:
                 ol.attrib['class'] += ' single'
 
     def __iter__(self):
-        for _, element in etree.iterparse(self.input_file):
+        input_files = [self.input_file]
+        while input_files:
+            for _, element in etree.iterparse(input_files.pop()):
 
-            if element.tag == TAG_HEADER:
-                yield from self._parse_header(element)
-                element.clear()
+                if element.tag == TAG_HEADER:
+                    yield from self._parse_header(element)
+                    element.clear()
 
-            if element.tag == TAG_ENTRY:
-                yield from self._parse_entry(element)
-                element.clear()
+                if element.tag == TAG_ENTRY:
+                    yield from self._parse_entry(element)
+                    element.clear()
 
+                if element.tag == '{http://www.w3.org/2001/XInclude}include':
+                    include_file = os.path.join(
+                            os.path.dirname(self.input_file),
+                            element.attrib['href'])
+                    input_files.append(include_file)
 
 
 def parse_args():
