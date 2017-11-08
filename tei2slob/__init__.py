@@ -48,6 +48,8 @@ TAG_HEADER = ns('teiHeader')
 
 TAG_ENTRY = ns('entry')
 
+TAG_INCLUDE = '{http://www.w3.org/2001/XInclude}include'
+
 
 def text(parent, path):
     element = parent.find(path, NS_MAP)
@@ -174,7 +176,7 @@ class TEI:
                     yield from self._parse_entry(element)
                     element.clear()
 
-                if element.tag == '{http://www.w3.org/2001/XInclude}include':
+                if element.tag == TAG_INCLUDE:
                     include_file = os.path.join(
                             os.path.dirname(self.input_file),
                             element.attrib['href'])
