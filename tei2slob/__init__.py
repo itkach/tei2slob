@@ -157,9 +157,14 @@ class TEI:
                 ol.attrib['class'] += ' single'
 
     def __iter__(self):
-        input_files = [self.input_file]
-        while input_files:
-            for _, element in etree.iterparse(input_files.pop()):
+        todo_files = [self.input_file]
+        done_files = set()
+
+        while todo_files:
+            current_file = os.path.normpath(todo_files.pop())
+            done_files.add(current_file)
+
+            for _, element in etree.iterparse(current_file):
 
                 if element.tag == TAG_HEADER:
                     yield from self._parse_header(element)
@@ -173,7 +178,11 @@ class TEI:
                     include_file = os.path.join(
                             os.path.dirname(self.input_file),
                             element.attrib['href'])
-                    input_files.append(include_file)
+                    if include_file in done_files:
+                        raise Exception('{} is included multiple times. '
+                                'Stopping to avoid infinite loop due to '
+                                'circular includes.'.format(include_file))
+                    todo_files.append(include_file)
 
 
 def parse_args():
