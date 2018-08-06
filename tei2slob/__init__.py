@@ -195,6 +195,7 @@ def parse_args():
                             help='TEI file name')
 
     arg_parser.add_argument('-o', '--output-file', type=str,
+                            dest="output_file",
                             help='Name of output slob file')
 
     arg_parser.add_argument('-c', '--compression',
@@ -284,7 +285,7 @@ def main():
     with slob.open(outname) as s:
         edition = s.tags.get('edition')
 
-    if edition:
+    if edition and (not edition in outname or not args.output_file):
         noext, ext = os.path.splitext(outname)
         newname = '{noext}-{edition}{ext}'.format(noext=noext, edition=edition, ext=ext)
         os.rename(outname, newname)
