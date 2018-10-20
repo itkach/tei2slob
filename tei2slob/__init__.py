@@ -53,7 +53,8 @@ TAG_INCLUDE = '{http://www.w3.org/2001/XInclude}include'
 
 def text(parent, path):
     element = parent.find(path, NS_MAP)
-    return element.text if element is not None else ''
+    return element.text if element is not None and element.text is not None\
+            else ''
 
 
 def attr(parent, path, attr_name):
